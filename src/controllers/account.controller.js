@@ -1,5 +1,4 @@
 const accountModel = require("../models/account.model")
-const { create } = require("../models/user.model")
 
 
 async function createAccountController(req, res) {
