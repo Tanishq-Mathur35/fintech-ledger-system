@@ -129,6 +129,171 @@ The Fintech Ledger Team`
 }
 
 
+async function sendTransactionEmail(userEmail, name, amount, toAccount) {
+    const subject = "Transaction Successful 💸";
+
+    const text = `Hello ${name},
+
+Your transaction was successfully completed.
+
+Amount: $${amount}
+Recipient Account: ${toAccount}
+
+The funds have been securely transferred and recorded in your Fintech Ledger account.
+
+You can log in anytime to review your transaction history and monitor your financial activity.
+
+If you did not authorize this transaction, please contact our support team immediately.
+
+Best regards,  
+The Fintech Ledger Team`;
+
+    const html = `
+    <div style="font-family: Arial, Helvetica, sans-serif; background-color: #f4f6f8; padding: 20px;">
+        
+        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            
+            <div style="background: #16a34a; padding: 25px; text-align: center; color: white;">
+                <h1 style="margin: 0;">Transaction Successful</h1>
+                <p style="margin: 5px 0 0; font-size: 14px;">Fintech Ledger</p>
+            </div>
+
+            <div style="padding: 30px; color: #333;">
+                
+                <img 
+                    src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc"
+                    alt="Transaction Success"
+                    style="width: 100%; border-radius: 8px; margin-bottom: 20px;"
+                />
+
+                <h2 style="margin-top: 0;">Hello, ${name} 👋</h2>
+
+                <p style="line-height: 1.6;">
+                    Your transaction has been successfully processed. Below are the details:
+                </p>
+
+                <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0; font-size: 16px;"><strong>Amount:</strong> $${amount}</p>
+                    <p style="margin: 5px 0 0; font-size: 16px;"><strong>Recipient Account:</strong> ${toAccount}</p>
+                </div>
+
+                <p style="line-height: 1.6;">
+                    The funds have been securely transferred and recorded in your account. 
+                    You can review this transaction anytime from your dashboard.
+                </p>
+
+                <p style="line-height: 1.6;">
+                    If you notice anything unusual or did not authorize this transaction, 
+                    please contact our support team immediately.
+                </p>
+
+                <p style="margin-top: 25px;">
+                    Best regards,<br>
+                    <strong>The Fintech Ledger Team</strong>
+                </p>
+
+            </div>
+
+            <div style="background: #f1f1f1; text-align: center; padding: 15px; font-size: 12px; color: #888;">
+                © ${new Date().getFullYear()} Fintech Ledger. All rights reserved.
+            </div>
+
+        </div>
+    </div>
+    `;
+
+    await sendEmail(userEmail, subject, text, html);
+}
+
+
+async function sendTransactionFailureEmail(userEmail, name, amount, toAccount) {
+    const subject = "Transaction Failed ❌";
+
+    const text = `Hello ${name},
+
+We regret to inform you that your transaction could not be completed.
+
+Amount: $${amount}
+Recipient Account: ${toAccount}
+
+No funds have been deducted from your account. This may have occurred due to a temporary issue such as insufficient balance, network errors, or bank-side restrictions.
+
+Please try again after some time or verify your account details.
+
+If the issue persists or you did not attempt this transaction, contact our support team immediately.
+
+Best regards,  
+The Fintech Ledger Team`;
+
+    const html = `
+    <div style="font-family: Arial, Helvetica, sans-serif; background-color: #f4f6f8; padding: 20px;">
+        
+        <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            
+            <div style="background: #dc2626; padding: 25px; text-align: center; color: white;">
+                <h1 style="margin: 0;">Transaction Failed</h1>
+                <p style="margin: 5px 0 0; font-size: 14px;">Fintech Ledger</p>
+            </div>
+
+            <div style="padding: 30px; color: #333;">
+                
+                <img 
+                    src="https://images.unsplash.com/photo-1580910051074-3eb694886505"
+                    alt="Transaction Failed"
+                    style="width: 100%; border-radius: 8px; margin-bottom: 20px;"
+                />
+
+                <h2 style="margin-top: 0;">Hello, ${name}</h2>
+
+                <p style="line-height: 1.6;">
+                    Unfortunately, your recent transaction could not be completed. Here are the details:
+                </p>
+
+                <div style="background: #fef2f2; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0; font-size: 16px;"><strong>Amount:</strong> $${amount}</p>
+                    <p style="margin: 5px 0 0; font-size: 16px;"><strong>Recipient Account:</strong> ${toAccount}</p>
+                </div>
+
+                <p style="line-height: 1.6;">
+                    <strong>No funds have been deducted</strong> from your account. This issue may be caused by:
+                </p>
+
+                <ul style="line-height: 1.8; padding-left: 20px;">
+                    <li>Insufficient balance</li>
+                    <li>Temporary network or server issues</li>
+                    <li>Bank or payment provider restrictions</li>
+                    <li>Incorrect recipient details</li>
+                </ul>
+
+                <p style="line-height: 1.6;">
+                    Please review the details and try again. If the issue continues, we recommend contacting support for assistance.
+                </p>
+
+                <p style="line-height: 1.6;">
+                    If you did not initiate this transaction, report it immediately to ensure your account security.
+                </p>
+
+                <p style="margin-top: 25px;">
+                    Best regards,<br>
+                    <strong>The Fintech Ledger Team</strong>
+                </p>
+
+            </div>
+
+            <div style="background: #f1f1f1; text-align: center; padding: 15px; font-size: 12px; color: #888;">
+                © ${new Date().getFullYear()} Fintech Ledger. All rights reserved.
+            </div>
+
+        </div>
+    </div>
+    `;
+
+    await sendEmail(userEmail, subject, text, html);
+}
+
+
 module.exports = {
-    sendRegistrationEmail
+    sendRegistrationEmail,
+    sendTransactionEmail,
+    sendTransactionFailureEmail
 };
